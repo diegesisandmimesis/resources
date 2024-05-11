@@ -86,6 +86,8 @@ class ResourceCollective: CollectiveGroup
 ;
 
 modify Thing
+	// Fix for collective groups falling out of sense tables,
+	// per JJ McC.
 	addToSenseInfoTable(sense, tab) {
 		inherited(sense, tab);
 		if(tab.isKeyPresent(self))
