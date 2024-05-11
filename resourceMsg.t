@@ -1,18 +1,18 @@
 #charset "us-ascii"
 //
-// resourcesMsg.t
+// resourceMsg.t
 //
 #include <adv3.h>
 #include <en_us.h>
 
-#include "resources.h"
+#include "resource.h"
 
 modify libMessages
 	// Should never happen, but eh.
-	resourcesSummaryFailed = '{You/He} notice{s} nothing unusual. '
+	resourceSummaryFailed = '{You/He} notice{s} nothing unusual. '
 
 	//
-	resourcesSummarizeExamine(n, obj) {
+	resourceSummarizeExamine(n, obj) {
 		return('It\'s <<spellInt(n)>> <<obj.pluralName>>. ');
 	}
 ;

@@ -1,67 +1,67 @@
 #charset "us-ascii"
 //
-// resources.t
+// resource.t
 //
 #include <adv3.h>
 #include <en_us.h>
 
-#include "resources.h"
+#include "resource.h"
 
 // Module ID for the library
-resourcesModuleID: ModuleID {
-        name = 'Resources Library'
+resourceModuleID: ModuleID {
+        name = 'Resource Library'
         byline = 'Diegesis & Mimesis'
         version = '1.0'
         listingOrder = 99
 }
 
-class Resources: Thing
-	resourcesObjectClass = ResourcesObject
+class Resource: Thing
+	resourceObjectClass = ResourceObject
 
-	resourcesCollectiveClass = ResourcesCollective
-	resourcesListClass = ResourcesList
-	resourcesReportManagerClass = ResourcesReportManager
+	resourceCollectiveClass = ResourceCollective
+	resourceListClass = ResourceList
+	resourceReportManagerClass = ResourceReportManager
 
-	resourcesCollective = nil
-	resourcesList = nil
-	resourcesReportManager = nil
+	resourceCollective = nil
+	resourceList = nil
+	resourceReportManager = nil
 
 	dispenseTo = nil
 
-	getResourcesCollective() {
-		if(resourcesCollective == nil) {
-			resourcesCollective = resourcesCollectiveClass
+	getResourceCollective() {
+		if(resourceCollective == nil) {
+			resourceCollective = resourceCollectiveClass
 				.createInstance();
 
-			resourcesCollective.resources = self;
-			resourcesCollective.initResourcesCollective();
+			resourceCollective.resource = self;
+			resourceCollective.initResourceCollective();
 		}
-		return(resourcesCollective);
+		return(resourceCollective);
 	}
 
-	getResourcesList() {
-		if(resourcesList == nil)
-			resourcesList = resourcesListClass.createInstance();
-		return(resourcesList);
+	getResourceList() {
+		if(resourceList == nil)
+			resourceList = resourceListClass.createInstance();
+		return(resourceList);
 	}
 
-	getResourcesReportManager() {
-		if(resourcesReportManagerClass == nil)
+	getResourceReportManager() {
+		if(resourceReportManagerClass == nil)
 			return(nil);
-		if(resourcesReportManager == nil) {
-			resourcesReportManager = resourcesReportManagerClass
+		if(resourceReportManager == nil) {
+			resourceReportManager = resourceReportManagerClass
 				.createInstance();
-			resourcesReportManager.resources = self;
+			resourceReportManager.resource = self;
 		}
-		return(resourcesReportManager);
+		return(resourceReportManager);
 	}
 
 	dispenseObject() {
 		local obj;
 
-		obj = resourcesObjectClass.createInstance();
-		obj.resources = self;
-		obj.initResourcesObject();
+		obj = resourceObjectClass.createInstance();
+		obj.resource = self;
+		obj.initResourceObject();
 
 		if(dispenseTo != nil)
 			obj.moveInto(dispenseTo);
@@ -72,7 +72,7 @@ class Resources: Thing
 	getReportObjects() {
 		local m;
 
-		if((m = getResourcesReportManager()) == nil)
+		if((m = getResourceReportManager()) == nil)
 			return(nil);
 		return(m.getReportObjects());
 	}
@@ -82,22 +82,22 @@ class Resources: Thing
 
 		if(((o = getReportObjects()) == nil)
 			|| (o.length < 1)) {
-			txt.append(libMessages.resourcesSummaryFailed());
+			txt.append(libMessages.resourceSummaryFailed());
 			return;
 		}
-		txt.append(libMessages.resourcesSummarizeExamine(o.length,
+		txt.append(libMessages.resourceSummarizeExamine(o.length,
 			o[1]));
 	}
 ;
 
-class ResourcesList: ListGroupEquivalent;
+class ResourceList: ListGroupEquivalent;
 
-class ResourcesCollective: CollectiveGroup
+class ResourceCollective: CollectiveGroup
 	isPlural = true
 
-	resources = nil
+	resource = nil
 
-	resourcesKludge = nil
+	resourceKludge = nil
 
 	isCollectiveAction(action, whichObj) { return(true); }
 
@@ -127,12 +127,12 @@ class ResourcesCollective: CollectiveGroup
 				if(o.obj_ == self)
 					o.quant_ = reqNum;
 			});
-			resourcesKludge = reqNum;
+			resourceKludge = reqNum;
 		}
 	}
 
 	filterResolveList(lst, action, whichObj, np, reqNum) {
-		resourcesKludge = nil;
+		resourceKludge = nil;
 
 		if(isCollectiveQuant(np, reqNum)
 			&& isCollectiveAction(action, whichObj)) {
@@ -150,13 +150,13 @@ class ResourcesCollective: CollectiveGroup
 		return(lst);
 	}
 
-	initResourcesCollective() {
+	initResourceCollective() {
 		local cls;
 
-		if(resources == nil)
+		if(resource == nil)
 			return;
 
-		if((cls = resources.resourcesObjectClass) == nil)
+		if((cls = resource.resourceObjectClass) == nil)
 			return;
 
 		borrowFromDictionary(cls, &noun);
@@ -170,14 +170,14 @@ class ResourcesCollective: CollectiveGroup
 	}
 ;
 
-class ResourcesReportManager: ReportManager
-	resources = nil
+class ResourceReportManager: ReportManager
+	resource = nil
 
 	reportManagerActions = static [ ExamineAction ]
 
 	checkReport(x) {
 		return((x.dobj_ != nil)
-			&& (x.dobj_.ofKind(resources.resourcesObjectClass)));
+			&& (x.dobj_.ofKind(resource.resourceObjectClass)));
 	}
 
 	summarizeReport(act, vec, txt) {
@@ -185,5 +185,5 @@ class ResourcesReportManager: ReportManager
 			summarizeExamines(txt);
 	}
 
-	summarizeExamines(txt) { resources.summarizeExamines(txt); }
+	summarizeExamines(txt) { resource.summarizeExamines(txt); }
 ;
