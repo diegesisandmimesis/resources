@@ -16,16 +16,26 @@ resourceModuleID: ModuleID {
 }
 
 class Resource: Thing
+	// Object class for the kind of resource we manage.
 	resourceObjectClass = ResourceObject
 
+	// The collective group for this resource.
 	resourceCollectiveClass = ResourceCollective
+
+	// The lister class for this resource.
 	resourceListClass = ResourceList
+
+	// The report manager class for this resource.
 	resourceReportManagerClass = ResourceReportManager
 
+	// Instances of the above classes for this particular Resource
+	// instance.
 	resourceCollective = nil
 	resourceList = nil
 	resourceReportManager = nil
 
+	// When we're asked to dispense a resource, this is where
+	// it'll go by default.
 	dispenseTo = nil
 
 	getResourceCollective() {
@@ -69,6 +79,7 @@ class Resource: Thing
 		return(obj);
 	}
 
+	// Get all the objects being summarized in a report.
 	getReportObjects() {
 		local m;
 
@@ -77,6 +88,7 @@ class Resource: Thing
 		return(m.getReportObjects());
 	}
 
+	// Summarize >EXAMINE for multiple instances of our resource.
 	summarizeExamines(txt) {
 		local o;
 
@@ -93,9 +105,10 @@ class Resource: Thing
 class ResourceList: ListGroupEquivalent;
 
 class ResourceCollective: CollectiveGroup
-	isPlural = true
-
+	// Our parent Resource instance.
 	resource = nil
+
+	isPlural = true
 
 	resourceKludge = nil
 
