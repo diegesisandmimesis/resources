@@ -20,7 +20,7 @@ class ResourceCollective: CollectiveGroup
 	isCollectiveAction(action, whichObj) { return(true); }
 
 	isCollectiveQuant(np, reqNum) {
-		return((reqNum == nil) || (reqNum > 1));
+		return((reqNum != nil) && (reqNum > 1));
 	}
 
 	filterResolveListCount(lst, reqNum) {
@@ -37,12 +37,7 @@ class ResourceCollective: CollectiveGroup
 			}
 		});
 
-/*
-		if(reqNum == nil)
-			reqNum = len;
-*/
-
-		if(reqNum <= len) {
+		if((reqNum != nil) && (reqNum <= len)) {
 			lst.forEach(function(o) {
 				if(o.obj_ == self)
 					o.quant_ = reqNum;
@@ -87,5 +82,15 @@ class ResourceCollective: CollectiveGroup
 	borrowFromDictionary(cls, prop) {
 		if(cls.(prop) != nil)
 			cmdDict.addWord(self, cls.(prop), prop);
+	}
+;
+
+modify Thing
+	addToSenseInfoTable(sense, tab) {
+		inherited(sense, tab);
+		if(tab.isKeyPresent(self))
+			collectiveGroups.forEach(function(o) {
+				o.addToSenseInfoTable(sense, tab);
+			});
 	}
 ;
