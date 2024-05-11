@@ -5,7 +5,7 @@
 #include <adv3.h>
 #include <en_us.h>
 
-#include "resource.h"
+#include "resources.h"
 
 modify libMessages
 	// Should never happen, but eh.

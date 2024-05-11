@@ -5,7 +5,7 @@
 #include <adv3.h>
 #include <en_us.h>
 
-#include "resource.h"
+#include "resources.h"
 
 class ResourceObject: Thing
 	isEquivalent = true
