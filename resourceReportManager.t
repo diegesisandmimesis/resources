@@ -9,19 +9,6 @@
 
 class ResourceReportManager: ReportManager
 	resourceFactory = nil
-
-	reportManagerActions = static [ ExamineAction ]
-
-	checkReport(x) {
-		return((x.dobj_ != nil) && (x.dobj_.ofKind(
-			resourceFactory.resourceClass)));
-	}
-
-	summarizeReport(act, vec, txt) {
-		//summarizeExamines(txt);
-	}
-
-	//summarizeExamines(txt) { resourceFactory.summarizeExamines(txt); }
 ;
 
 modify ReportSummary
@@ -37,5 +24,19 @@ modify ReportSummary
 		}
 
 		return(nil);
+	}
+
+	_summarize(vec, txt) {
+		local resource;
+
+		if((resource = getReportObjects(vec)) == nil)
+			return;
+		if(resource.length < 1)
+			return;
+		resource = resource[1];
+
+		gMessageParams(resource);
+
+		inherited(vec, txt);
 	}
 ;

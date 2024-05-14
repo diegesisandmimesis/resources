@@ -4,3 +4,4 @@ source: resourceFactory.t
 source: resourceCollective.t
 source: resourceReportManager.t
 source: resourceMsg.t
+source: resourceMessageBuilder.t

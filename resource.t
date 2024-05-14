@@ -52,4 +52,19 @@ class Resource: Thing
 		if(reportManager == nil)
 			reportManager = d.getResourceReportManager();
 	}
+
+	singleOrPluralName() {
+		if(reportManager == nil)
+			return(inherited());
+		if(reportManager.summarizedReports() == 1)
+			return(name);
+		else
+			return(pluralName);
+	}
+
+	resourceCount() {
+		if(reportManager == nil)
+			return(inherited());
+		return(spellInt(reportManager.summarizedReports()));
+	}
 ;
