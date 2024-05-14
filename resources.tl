@@ -5,3 +5,4 @@ source: resourceCollective.t
 source: resourceReportManager.t
 source: resourceMsg.t
 source: resourceMessageBuilder.t
+source: resourceSummary.t

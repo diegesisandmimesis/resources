@@ -67,4 +67,16 @@ class Resource: Thing
 			return(inherited());
 		return(spellInt(reportManager.summarizedReports()));
 	}
+
+	aOrResourceCount() {
+		local n;
+
+		if(reportManager == nil)
+			return(inherited());
+
+		if((n = reportManager.summarizedReports()) == 1)
+			return('a');
+		else
+			return(spellInt(n));
+	}
 ;

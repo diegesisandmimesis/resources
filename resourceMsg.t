@@ -11,7 +11,6 @@ modify libMessages
 	// Should never happen, but eh.
 	resourceSummaryFailed = '{You/He} notice{s} nothing unusual. '
 
-	//
 	resourceSummarizeExamine(n, obj) {
 		return('It\'s <<spellInt(n)>> <<obj.pluralName>>. ');
 	}
