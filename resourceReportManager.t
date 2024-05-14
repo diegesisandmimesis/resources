@@ -18,8 +18,24 @@ class ResourceReportManager: ReportManager
 	}
 
 	summarizeReport(act, vec, txt) {
-		summarizeExamines(txt);
+		//summarizeExamines(txt);
 	}
 
-	summarizeExamines(txt) { resourceFactory.summarizeExamines(txt); }
+	//summarizeExamines(txt) { resourceFactory.summarizeExamines(txt); }
+;
+
+modify ReportSummary
+	initializeSummary() {
+		if(inherited() == true)
+			return(true);
+		if(location.ofKind(ResourceFactory)) {
+			if(location.resourceReportManager != nil) {
+				location.resourceReportManager
+					.addReportManagerSummary(self);
+				return(true);
+			}
+		}
+
+		return(nil);
+	}
 ;

@@ -54,6 +54,9 @@ class ResourceFactory: object
 			resourceReportManager = resourceReportManagerClass
 				.createInstance();
 			resourceReportManager.resourceFactory = self;
+			if(resourceReportManager.reportManagerFor == nil)
+				resourceReportManager.reportManagerFor
+					= resourceClass;
 		}
 		return(resourceReportManager);
 	}
@@ -80,6 +83,7 @@ class ResourceFactory: object
 		return(m.getReportObjects());
 	}
 
+/*
 	// Summarize >EXAMINE for multiple instances of our resource.
 	summarizeExamines(txt) {
 		local o;
@@ -92,4 +96,5 @@ class ResourceFactory: object
 		txt.append(libMessages.resourceSummarizeExamine(o.length,
 			o[1]));
 	}
+*/
 ;
