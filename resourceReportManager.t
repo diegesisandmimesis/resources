@@ -10,10 +10,18 @@
 // Subclass of ReportManager for resource factory objects.
 class ResourceReportManager: ReportManager
 	resourceFactory = nil
+
+	reportManagerDefaultSummaries = static [
+		ResourceExamineSummary,
+		ResourceSmellSummary,
+		ResourceSoundSummary,
+		ResourceFeelSummary,
+		ResourceTasteSummary
+	]
 ;
 
 modify ReportSummary
-	initializeSummary() {
+	initializeReportSummary() {
 		// If the base method figured out the location, we have
 		// nothing to do.
 		if(inherited() == true)

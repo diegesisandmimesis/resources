@@ -15,10 +15,44 @@ resourceModuleID: ModuleID {
         listingOrder = 99
 }
 
+modify Thing
+	_resourceSummary = nil
+;
+
 class Resource: Thing
 	isEquivalent = true
 
 	resourceFactory = nil
+
+	// The soundDesc and smellDesc properties by default handle
+	// output by generating an report, via defaultDescReport.
+	// If we're calling the properties because we're in the middle
+	// of summarizing reports we really don't want that to happen,
+	// so we manually output the same message, letting the
+	// caller (ResourceSenseSummary._summarizeDesc()) to capture
+	// the output to add to the summary.
+	// If either property is overwritten via something like:
+	//
+	//	soundDesc = "It smells like {a/count resource}
+	//		{single/plural resource}. "
+	//
+	// This will work fine because we'll have no trouble capturing
+	// a double-quoted string.
+	soundDesc() {
+		if(_resourceSummary != true) {
+			inherited();
+			return;
+		}
+		"<<gActor.getActionMessageObj().thingSoundDescMsg(self)>> ";
+	}
+
+	smellDesc() {
+		if(_resourceSummary != true) {
+			inherited();
+			return;
+		}
+		"<<gActor.getActionMessageObj().thingSmellDescMsg(self)>> ";
+	}
 
 	initializeThing() {
 		inherited();
