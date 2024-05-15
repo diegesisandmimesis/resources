@@ -2,6 +2,64 @@
 //
 // resource.t
 //
+//	A TADS3/adv3 for implementing indistinguishable, interchangeable
+//	resource objects (wood, stone, coins, and so on).
+//
+//	The module takes care of a few common tasks associated with
+//	coding these kinds of objects in adv3:
+//
+//		-Creating and assigning a CollectiveGroup
+//		-Creating and assigning a ListGroupEquivalent
+//		-Creating and assigning a report manager to merge
+//			multiple reports
+//
+//	In addition it provides some message parameter substitutions to
+//	work with equivalent objects singly or in groups:
+//
+//		{single/plural resource}
+//			replaced with the resource's name or plural name
+//			as appropriate
+//
+//		{count resource}
+//			replaced with the number of matching resource
+//			objects spelled out ("one", "two", "three", and so
+//			on
+//
+//		{a/count resource}
+//			replaced with "a" if there's one matching resource
+//			or the count ("five", "fifteen", or whatever) if
+//			there are more
+//
+//	These are designed to be used in conjunction with report summaries,
+//	including the implicit sense-related summaries included with the
+//	module.  They summarize >EXAMINE, >SMELL, >LISTEN TO, >FEEL,
+//	and >TASTE actions on the resource.  See the examples below for
+//	more information.
+//
+//
+// USAGE
+//
+//	First, declare a factory object for the resource.  It's the container
+//	for the various other bits that handle things:
+//
+//		// Declare a resource factory for the Pebble resource
+//		ResourceFactory
+//			resourceClass = Pebble
+//		;
+//
+//		// Declare the resource
+//		class Pebble: Resource
+//			'(small) (round) pebble*pebbles' 'pebble'
+//
+//			"\^{A/Count resource} small, round
+//			{single/plural resource}. "
+//
+//			smellDesc = "It smells like {a/count resource} small,
+//				round {single/plural resource}. "
+//
+//		;
+//
+//
 #include <adv3.h>
 #include <en_us.h>
 
@@ -15,14 +73,16 @@ resourceModuleID: ModuleID {
         listingOrder = 99
 }
 
+// This is used for a kludge to workaround how adv3 handles sense
+// descriptions (in their own reports).
 modify Thing
 	_resourceSummary = nil
 ;
 
-class Resource: Thing
-	isEquivalent = true
-
+class Resource: ResourceMessageParams, Thing
 	resourceFactory = nil
+
+	isEquivalent = true
 
 	// The soundDesc and smellDesc properties by default handle
 	// output by generating an report, via defaultDescReport.
@@ -73,44 +133,20 @@ class Resource: Thing
 	}
 
 	initResource() {
-		local d;
+		local d, l;
 
 		if((d = getResourceFactory()) == nil)
 			return;
 
-		if(collectiveGroups.length == 0)
-			collectiveGroups += d.getResourceCollective();
-		if(listWith.length == 0)
-			listWith += d.getResourceList();
+		l = d.getResourceCollective();
+		if(collectiveGroups.indexOf(l) == nil)
+			collectiveGroups += l;
+
+		l = d.getResourceList();
+		if(listWith.indexOf(l) == nil)
+			listWith += l;
 
 		if(reportManager == nil)
 			reportManager = d.getResourceReportManager();
-	}
-
-	singleOrPluralName() {
-		if(reportManager == nil)
-			return(inherited());
-		if(reportManager.summarizedReports() == 1)
-			return(name);
-		else
-			return(pluralName);
-	}
-
-	resourceCount() {
-		if(reportManager == nil)
-			return(inherited());
-		return(spellInt(reportManager.summarizedReports()));
-	}
-
-	aOrResourceCount() {
-		local n;
-
-		if(reportManager == nil)
-			return(inherited());
-
-		if((n = reportManager.summarizedReports()) == 1)
-			return('a');
-		else
-			return(spellInt(n));
 	}
 ;

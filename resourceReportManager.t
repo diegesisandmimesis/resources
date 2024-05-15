@@ -11,6 +11,8 @@
 class ResourceReportManager: ReportManager
 	resourceFactory = nil
 
+	reportManagerAnnounceText = '{single/plural resource}'
+
 	reportManagerDefaultSummaries = static [
 		ResourceExamineSummary,
 		ResourceSmellSummary,
@@ -53,8 +55,10 @@ modify ReportSummary
 		// tag.
 		if((resource = getReportObjects(vec)) == nil)
 			return;
+
 		if(resource.length < 1)
 			return;
+
 		resource = resource[1];
 
 		gMessageParams(resource);

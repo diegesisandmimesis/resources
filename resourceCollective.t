@@ -9,7 +9,7 @@
 
 class ResourceList: ListGroupEquivalent;
 
-class ResourceCollective: CollectiveGroup
+class ResourceCollective: ResourceMessageParams, CollectiveGroup
 	// Our parent Resource instance.
 	resourceFactory = nil
 

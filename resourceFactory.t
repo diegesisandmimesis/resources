@@ -42,8 +42,9 @@ class ResourceFactory: object
 	}
 
 	getResourceList() {
-		if(resourceList == nil)
+		if(resourceList == nil) {
 			resourceList = resourceListClass.createInstance();
+		}
 		return(resourceList);
 	}
 

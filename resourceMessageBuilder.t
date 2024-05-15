@@ -49,6 +49,15 @@ resourceMessageBuilder: PreinitObject
 				nil,
 				nil
 			]);
+
+		langMessageBuilder.paramList_
+			= langMessageBuilder.paramList_.append([
+				'it/they',
+				&itThey,
+				'resource',
+				nil,
+				nil
+			]);
 	}
 ;
 
@@ -58,6 +67,7 @@ modify Thing
 	singleOrPluralName() { return(name); }
 	resourceCount() { return(toString(spellInt(1))); }
 	aOrResourceCount() { return('a'); }
+	itThey() { return('it'); }
 ;
 
 // Handle some T3 bookkeeping.
@@ -81,4 +91,31 @@ InitObject
 		langMessageBuilder.nameTable_['resource'] =
 			{: gDobj != nil ? gDobj : gPlayerChar };
 	}
+;
+
+
+class ResourceMessageParams: object
+	getReportCount() {
+		return(reportManager ? reportManager.summarizedReports() : 0);
+	}
+
+	singleReport() { return(getReportCount() == 1); }
+	singleOrPluralName() { return(singleReport() ? name : pluralName); }
+	resourceCount() { return(spellInt(getReportCount())); }
+
+	aOrResourceCount() {
+		local n;
+
+		if((n = getReportCount()) == 1)
+			return('a');
+		else
+			return(spellInt(n));
+	}
+
+	itThey() { return(singleReport() ? 'it' : 'they'); }
+
+	// Tweak verb endings to use the report count instead of isPlural.
+	verbEndingS { return(!singleReport() ? '' : 's'); }
+	verbEndingEs { return(tSel(!singleReport() ? '' : 'es', 'ed')); }
+	verbEndingIes { return(tSel(!singleReport() ? 'y' : 'ies', 'ied')); }
 ;
