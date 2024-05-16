@@ -103,7 +103,6 @@ class ResourceMessageParams: object
 	aOrResourceCount() {
 		local n;
 
-aioSay('count = <<toString(getReportCount())>>\n ');
 		if((n = getReportCount()) == 1)
 			return('a');
 		else

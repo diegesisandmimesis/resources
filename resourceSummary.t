@@ -17,7 +17,8 @@ class ResourceSenseSummary: ReportSummary
 		o = data.dobj;
 
 		o._resourceSummary = true;
-		txt.append(mainOutputStream.captureOutput({: "<<o.(prop)>>" }));
+		txt.append(langMessageBuilder.generateMessage(
+			mainOutputStream.captureOutput({: "<<o.(prop)>>" })));
 		o._resourceSummary = nil;
 	}
 ;
