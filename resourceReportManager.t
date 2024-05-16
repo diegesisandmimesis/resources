@@ -48,22 +48,13 @@ modify ReportSummary
 	// other, the vocab/counting should always work out unless the
 	// instance is doing something silly that they'll have to handle for
 	// themself.
-	_summarize(vec, txt) {
+	reportSummaryMessageParams(obj?) {
 		local resource;
 
-		// Add a "resource" message parameter substitution
-		// tag.
-		if((resource = getReportObjects(vec)) == nil)
+		if(obj == nil)
 			return;
 
-		if(resource.length < 1)
-			return;
-
-		resource = resource[1];
-
+		resource = obj;
 		gMessageParams(resource);
-
-		// Now just continue with the normal behavior.
-		inherited(vec, txt);
 	}
 ;

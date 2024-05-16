@@ -6,4 +6,4 @@ source: resourceReportManager.t
 source: resourceMsg.t
 source: resourceMessageBuilder.t
 source: resourceSummary.t
-source: resourcePile.t
+source: resourceDebug.t

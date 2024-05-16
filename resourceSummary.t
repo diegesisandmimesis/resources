@@ -8,13 +8,13 @@
 #include "resources.h"
 
 class ResourceSenseSummary: ReportSummary
-	_summarizeDesc(vec, txt, prop) {
+	_summarizeDesc(data, txt, prop) {
 		local o;
 
-		if((vec == nil) || vec.length < 1)
+		if((data == nil) || (data.vec == nil) || data.vec.length < 1)
 			return;
 
-		o = vec[1].dobj_;
+		o = data.dobj;
 
 		o._resourceSummary = true;
 		txt.append(mainOutputStream.captureOutput({: "<<o.(prop)>>" }));
@@ -24,25 +24,25 @@ class ResourceSenseSummary: ReportSummary
 
 class ResourceExamineSummary: ResourceSenseSummary
 	action = ExamineAction
-	summarize(vec, txt) { _summarizeDesc(vec, txt, &desc); }
+	summarize(data, txt) { _summarizeDesc(data, txt, &desc); }
 ;
 
 class ResourceSmellSummary: ResourceSenseSummary
 	action = SmellAction
-	summarize(vec, txt) { _summarizeDesc(vec, txt, &smellDesc); }
+	summarize(data, txt) { _summarizeDesc(data, txt, &smellDesc); }
 ;
 
 class ResourceSoundSummary: ResourceSenseSummary
 	action = ListenToAction
-	summarize(vec, txt) { _summarizeDesc(vec, txt, &soundDesc); }
+	summarize(data, txt) { _summarizeDesc(data, txt, &soundDesc); }
 ;
 
 class ResourceFeelSummary: ResourceSenseSummary
 	action = FeelAction
-	summarize(vec, txt) { _summarizeDesc(vec, txt, &feelDesc); }
+	summarize(data, txt) { _summarizeDesc(data, txt, &feelDesc); }
 ;
 
 class ResourceTasteSummary: ResourceSenseSummary
 	action = TasteAction
-	summarize(vec, txt) { _summarizeDesc(vec, txt, &tasteDesc); }
+	summarize(data, txt) { _summarizeDesc(data, txt, &tasteDesc); }
 ;

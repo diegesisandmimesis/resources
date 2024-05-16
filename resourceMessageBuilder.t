@@ -95,10 +95,7 @@ InitObject
 
 
 class ResourceMessageParams: object
-	getReportCount() {
-		return(reportManager ? reportManager.summarizedReports() : 0);
-	}
-
+	getReportCount() { return(_reportCount != nil ? _reportCount : 1); }
 	singleReport() { return(getReportCount() == 1); }
 	singleOrPluralName() { return(singleReport() ? name : pluralName); }
 	resourceCount() { return(spellInt(getReportCount())); }
@@ -106,6 +103,7 @@ class ResourceMessageParams: object
 	aOrResourceCount() {
 		local n;
 
+aioSay('count = <<toString(getReportCount())>>\n ');
 		if((n = getReportCount()) == 1)
 			return('a');
 		else

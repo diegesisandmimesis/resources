@@ -81,21 +81,16 @@ class ResourceFactory: object
 
 		if((m = getResourceReportManager()) == nil)
 			return(nil);
+
 		return(m.getReportObjects());
 	}
 
-/*
-	// Summarize >EXAMINE for multiple instances of our resource.
-	summarizeExamines(txt) {
-		local o;
+	getReportDobj() {
+		local m;
 
-		if(((o = getReportObjects()) == nil)
-			|| (o.length < 1)) {
-			txt.append(libMessages.resourceSummaryFailed());
-			return;
-		}
-		txt.append(libMessages.resourceSummarizeExamine(o.length,
-			o[1]));
+		if((m = getResourceReportManager()) == nil)
+			return(nil);
+
+		return(m.getReportDobj());
 	}
-*/
 ;
