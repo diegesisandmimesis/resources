@@ -8,42 +8,44 @@
 #include "resources.h"
 
 class ResourceSenseSummary: ReportSummary
-	_summarizeDesc(data, txt, prop) {
-		local o;
+	_summarizeDesc(data, prop) {
+		local o, r;
 
 		if((data == nil) || (data.vec == nil) || data.vec.length < 1)
-			return;
+			return('');
 
 		o = data.dobj;
 
 		o._resourceSummary = true;
-		txt.append(langMessageBuilder.generateMessage(
-			mainOutputStream.captureOutput({: "<<o.(prop)>>" })));
+		r = langMessageBuilder.generateMessage(
+			mainOutputStream.captureOutput({: "<<o.(prop)>>" }));
 		o._resourceSummary = nil;
+
+		return(r);
 	}
 ;
 
 class ResourceExamineSummary: ResourceSenseSummary
 	action = ExamineAction
-	summarize(data, txt) { _summarizeDesc(data, txt, &desc); }
+	summarize(data) { return(_summarizeDesc(data, &desc)); }
 ;
 
 class ResourceSmellSummary: ResourceSenseSummary
 	action = SmellAction
-	summarize(data, txt) { _summarizeDesc(data, txt, &smellDesc); }
+	summarize(data) { return(_summarizeDesc(data, &smellDesc)); }
 ;
 
 class ResourceSoundSummary: ResourceSenseSummary
 	action = ListenToAction
-	summarize(data, txt) { _summarizeDesc(data, txt, &soundDesc); }
+	summarize(data) { return(_summarizeDesc(data, &soundDesc)); }
 ;
 
 class ResourceFeelSummary: ResourceSenseSummary
 	action = FeelAction
-	summarize(data, txt) { _summarizeDesc(data, txt, &feelDesc); }
+	summarize(data) { return(_summarizeDesc(data, &feelDesc)); }
 ;
 
 class ResourceTasteSummary: ResourceSenseSummary
 	action = TasteAction
-	summarize(data, txt) { _summarizeDesc(data, txt, &tasteDesc); }
+	summarize(data) { return(_summarizeDesc(data, &tasteDesc)); }
 ;
