@@ -16,10 +16,10 @@ class ResourceSenseSummary: ReportSummary
 
 		o = data.dobj;
 
-		o._resourceSummary = true;
+		o._resourceSummaryFlag = true;
 		r = langMessageBuilder.generateMessage(
 			mainOutputStream.captureOutput({: "<<o.(prop)>>" }));
-		o._resourceSummary = nil;
+		o._resourceSummaryFlag = nil;
 
 		return(r);
 	}

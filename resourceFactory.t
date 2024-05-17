@@ -74,23 +74,4 @@ class ResourceFactory: object
 
 		return(obj);
 	}
-
-	// Get all the objects being summarized in a report.
-	getReportObjects() {
-		local m;
-
-		if((m = getResourceReportManager()) == nil)
-			return(nil);
-
-		return(m.getReportObjects());
-	}
-
-	getReportDobj() {
-		local m;
-
-		if((m = getResourceReportManager()) == nil)
-			return(nil);
-
-		return(m.getReportDobj());
-	}
 ;

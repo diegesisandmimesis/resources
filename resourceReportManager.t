@@ -11,7 +11,7 @@
 class ResourceReportManager: ReportManager
 	resourceFactory = nil
 
-	reportManagerAnnounceText = '{single/plural resource}'
+	//reportManagerAnnounceText = '{single/plural resource}'
 
 	reportManagerDefaultSummaries = static [
 		ResourceExamineSummary,

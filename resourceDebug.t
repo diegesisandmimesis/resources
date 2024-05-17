@@ -20,9 +20,9 @@ modify ResourceMessageParams
 ;
 
 modify ResourceSenseSummary
-	_summarizeDesc(data, txt, prop) {
+	_summarizeDesc(data, prop) {
 		_debug('data count = <<toString(data.count)>>');
-		inherited(data, txt, prop);
+		inherited(data, prop);
 	}
 ;
 

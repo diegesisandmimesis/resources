@@ -76,7 +76,7 @@ resourceModuleID: ModuleID {
 // This is used for a kludge to workaround how adv3 handles sense
 // descriptions (in their own reports).
 modify Thing
-	_resourceSummary = nil
+	_resourceSummaryFlag = nil
 ;
 
 class Resource: ResourceMessageParams, Thing
@@ -99,7 +99,7 @@ class Resource: ResourceMessageParams, Thing
 	// This will work fine because we'll have no trouble capturing
 	// a double-quoted string.
 	soundDesc() {
-		if(_resourceSummary != true) {
+		if(_resourceSummaryFlag != true) {
 			inherited();
 			return;
 		}
@@ -107,7 +107,7 @@ class Resource: ResourceMessageParams, Thing
 	}
 
 	smellDesc() {
-		if(_resourceSummary != true) {
+		if(_resourceSummaryFlag != true) {
 			inherited();
 			return;
 		}
